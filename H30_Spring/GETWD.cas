@@ -1,0 +1,41 @@
+GETWD     START
+          RPUSH
+          LD      GR6, GR1 ;文字列領域の先頭のデータをGR6に代入
+          LD      GR7, GR2 ;管理テーブルの戦闘データをGR7に代入
+          LD      GR3, =-1 ;数字列の処理状態フラグの初期化
+          LAD     GR6, -1, GR6 ;GR6-1領域のデータをGR6に代入
+LP        LAD     GR6, 1, GR6 ;GR6+1領域のデータをGR6に代入
+          LD      GR4, 0, GR6 ;一文字を取り出す。
+          CPL GR4, ='.' ;最後の値だったら
+          JZE     FIN   ;FINにジャンプ
+          CPL GR4, =' ' ;空白が入ったら
+          JNZ     NUM   ;NUMにジャンプ
+          CALL    SETWD ;
+          JUMP    LP
+NUM       LD      GR3, GR3
+          JZE     LP
+          LD      GR3, =0
+          LD      GR1, GR6
+          JUMP    LP
+FIN       CALL    SETWD
+          LD      GR2, =-1
+          ST      GR2, 0, GR7
+          RPOP
+          RET
+SETWD     LD      GR3, GR3
+          JNZ     FIN2
+          LD      GR2, GR6
+          SUBL    GR2, GR1
+          CALL    DTOB
+          ST      GR0, 0, GR7
+          LD      GR3, =-1
+          LAD     GR7, 1, GR7
+FIN2      RET
+          END
+
+
+
+
+
+
+

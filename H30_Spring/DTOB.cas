@@ -1,0 +1,26 @@
+DTOB      START
+          RPUSH ;スタックに格納
+          ADDL    GR2, GR1; GR2 = GR1
+          LAD     GR0, 0 ;戻り値の初期化
+
+LP        CPL     GR1, GR2 ; 格納は終わったか？
+          JZE     FIN ;格納が終了したらFINにジャンプ
+          LD      GR4, 0, GR1 ;指標修飾により
+          SUBL GR4, ='0' ;一桁を数字に変換
+
+          ;GR0を10倍してGR4を加算
+          SLL     GR0, 1 ;GR0を1ビット論理左シフト
+          LD      GR5, GR0 ;GR5 = GR0
+          SLL     GR5, 2 ;GR5を2ビット論理左シフト
+          ;GR0を10倍する処理が必要だが、まだGR0は2倍にしかされていない。
+          ;よって、GR5を2ビット左シフトすることによって、10倍を実現している。
+          ADDL    GR0, GR5
+          ADDL    GR0, GR4
+          LAD     GR1, 1, GR1
+          JUMP    LP
+
+FIN       RPOP
+          RET
+          END
+
+
