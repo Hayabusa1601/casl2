@@ -1,0 +1,9 @@
+CASL      START
+          LD      GR0, DATA1 ;GR0にDATA1をコピー
+          ADDA    GR0, DATA2 ;GR0にdATA2を加算
+          ST      GR0, ANS ;GR0をANSにコピー
+          RET ;処理の終了
+DATA1     DC      123 ;データの定義
+DATA2     DC      456
+ANS       DS      1 ;格納領域の定義
+          END

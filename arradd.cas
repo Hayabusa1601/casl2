@@ -1,0 +1,14 @@
+CASL      START
+          XOR     GR0, GR0 ;初期化処理
+          XOR     GR1, GR1 
+L1        CPA     GR1, LEN ;GRとLENを比較
+          JZE     L2 ;等しければL2にジャンプ
+          ADDA    GR0, DATA, GR1 ;GR0にDATA[GR1]を加算する
+          ADDA    GR1, =1 ;GR1に1を加算する
+          JUMP    L1 ;L!に無条件ジャンプする
+L2        ST      GR0, ANS ;GR0をANSにコピーする
+          RET ;処理を終了する
+DATA      DC      12, 34, 56, 78, 90
+LEN       DC      5
+ANS       DS      1
+          END
